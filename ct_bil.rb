@@ -56,4 +56,19 @@ module CtBil
     return top_scoring[top_score].select{|x| x.length >= min_chunk_size}
   end
 
+  # In DNA strings, symbols 'A' and 'T' are complements of each other, as are 'C' and 'G'. Given a nucleotide p, we denote its complementary nucleotide as p. The reverse complement of a DNA string Pattern = p1…pn is the string Pattern = pn … p1 formed by taking the complement of each nucleotide in Pattern, then reversing the resulting string.
+  # For example, the reverse complement of Pattern = "GTCA" is Pattern = "TGAC".
+  def dna_reverse_compliment(str)
+    rev_str = str.reverse.downcase
+    legend = {
+      "a" => "t",
+      "t" => "a",
+      "g" => "c",
+      "c" => "g"
+    }
+    result = ""
+    rev_str.split("").map{|x| result << legend[x]}
+    return result.upcase
+  end
+
 end
