@@ -1,5 +1,8 @@
 module CtBil
 
+  # ---
+  # Frequent Words Problem 
+
   # A k-mer is a string of length k. We define Count(Text, Pattern) as the number of times that a k-mer Pattern appears as a substring of Text. For example,
   # Count(ACAACTATGCATACTATCGGGAACTATCCT,ACTAT)=3.
   # We note that Count(CGATATATCCATAG, ATA) is equal to 3 (not 2) since we should account for overlapping occurrences of Pattern in Text.
@@ -55,6 +58,9 @@ module CtBil
     return { top_score => top_scoring[top_score].select{|x| x.length >= min_chunk_size } }
   end
 
+  # ---
+  # Reverse Complement Problem
+
   # In DNA strings, symbols 'A' and 'T' are complements of each other, as are 'C' and 'G'. Given a nucleotide p, we denote its complementary nucleotide as p. The reverse complement of a DNA string Pattern = p1…pn is the string Pattern = pn … p1 formed by taking the complement of each nucleotide in Pattern, then reversing the resulting string.
   # For example, the reverse complement of Pattern = "GTCA" is Pattern = "TGAC".
   def dna_reverse_compliment(str)
@@ -73,6 +79,7 @@ module CtBil
   end
 
   # ---
+  # Pattern Matching Problem
 
   def find_indexes_of_ptrn(opt={})
     s = opt[:genome]
