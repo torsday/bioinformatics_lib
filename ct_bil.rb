@@ -1,7 +1,7 @@
 module CtBil
 
   # ---
-  # Frequent Words Problem 
+  # Frequent Words Problem
 
   # A k-mer is a string of length k. We define Count(Text, Pattern) as the number of times that a k-mer Pattern appears as a substring of Text. For example,
   # Count(ACAACTATGCATACTATCGGGAACTATCCT,ACTAT)=3.
@@ -73,9 +73,11 @@ module CtBil
       "c" => "g"
     }
 
-    rev_str.split("").map{|x| result << legend[x]}
-
-    return result.upcase
+    rev_str
+      .split("")
+      .map{|x| legend[x]} # translate
+      .join('')
+      .upcase
   end
 
   # ---
