@@ -27,10 +27,11 @@ module CtBil
   # Return: All most frequent k-mers in Text (in any order).
   def most_frequent_kmers(opt={})
     str = opt[:str]
-    min_chunk_size = opt[:min_chunk_size]
+    min_chunk_size = opt[:min_chunk_size] || 1
+    max_chunk_size = opt[:max_chunk_size] || str.length - 1
     results = {}
 
-    (min_chunk_size..str.length).each do |cs|
+    (min_chunk_size..max_chunk_size).each do |cs|
       chunk_size = cs
       results[cs] = {}
       (0..str.length - chunk_size).each do |n|
@@ -53,19 +54,14 @@ module CtBil
     end
 
     top_score = top_scoring.keys.max
-    return top_scoring[top_score].select{|x| x.length >= min_chunk_size}
+    return { top_score => top_scoring[top_score].select{|x| x.length >= min_chunk_size } }
   end
 
   # In DNA strings, symbols 'A' and 'T' are complements of each other, as are 'C' and 'G'. Given a nucleotide p, we denote its complementary nucleotide as p. The reverse complement of a DNA string Pattern = p1…pn is the string Pattern = pn … p1 formed by taking the complement of each nucleotide in Pattern, then reversing the resulting string.
   # For example, the reverse complement of Pattern = "GTCA" is Pattern = "TGAC".
   def dna_reverse_compliment(str)
     rev_str = str.reverse.downcase
-    legend = {
-      "a" => "t",
-      "t" => "a",
-      "g" => "c",
-      "c" => "g"
-    }
+    legend = {"a" => "t", "t" => "a", "g" => "c", "c" => "g"}
     result = ""
     rev_str.split("").map{|x| result << legend[x]}
     return result.upcase
