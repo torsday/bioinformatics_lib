@@ -72,4 +72,13 @@ module CtBil
     return result.upcase
   end
 
+  # ---
+
+  def find_indexes_of_ptrn(opt={})
+    s = opt[:genome]
+    ptrn = opt[:pattern]
+    p_length = ptrn.length
+    (0 ... s.length).select { |i| s[i,p_length] == ptrn }
+  end
+
 end

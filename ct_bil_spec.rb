@@ -22,4 +22,10 @@ describe CtBil do
       expect(dna_reverse_compliment("AAAACCCGGT")).to eq("ACCGGGTTTT")
     end
   end
+
+  describe "" do
+    it "should work" do
+      expect(find_indexes_of_ptrn(:genome => "GATATATGCATATACTT", :pattern => "ATAT")).to eq([1, 3, 9])
+    end
+  end
 end
