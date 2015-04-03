@@ -1,3 +1,5 @@
+require 'set'
+
 module CtBil
 
   # ---
@@ -31,6 +33,7 @@ module CtBil
     str            = opt[:str]
     min_chunk_size = opt[:min_chunk_size] || 1
     max_chunk_size = opt[:max_chunk_size] || str.length - 1
+    min_occurences = opt[:min_occurences] || 1
     results        = {}
     top_scoring    = {}
 
@@ -49,7 +52,7 @@ module CtBil
     results.each do |cs, cs_results_hash|
       cs_results_hash.each do |str, occurrences|
         top_scoring[occurrences] ||= []
-        top_scoring[occurrences]  << str if occurrences > 1
+        top_scoring[occurrences]  << str if occurrences >= min_occurences
       end
     end
 
@@ -88,6 +91,36 @@ module CtBil
     ptrn = opt[:pattern]
     p_length = ptrn.length
     (0 ... s.length).select { |i| s[i,p_length] == ptrn }
+  end
+
+  # ---
+  # Clump Finding Problem
+
+  # Given integers L and t, a string Pattern forms an (L, t)-clump inside a (larger) string Genome if there is an interval of Genome of length L in which Pattern appears at least t times. For example, TGCA forms a (25,3)-clump in the following Genome: gatcagcataagggtcccTGCAaTGCAtgacaagccTGCAgttgttttac.
+  # Find patterns forming clumps in a string.
+  # Given: A string Genome, and integers k, L, and t.
+  # Return: All distinct k-mers forming (L, t)-clumps in Genome.
+  def lt_clump(opt={})
+    end_matches     = Set.new
+    genome          = opt[:genome]
+    interval_length = opt[:L_interval]
+    occurrences     = opt[:times]
+    pattern_length  = opt[:k_ptrn_length]
+
+    (0..(genome.length - interval_length - 1)).each do |n|
+      start   = n
+      stop    = start + interval_length
+      gen_str = genome[start..stop]
+      most_frequent_kmers(
+        :str            => gen_str,
+        :min_chunk_size => pattern_length,
+        :max_chunk_size => pattern_length,
+        :min_occurences => occurrences
+      ).each do |matches,pattern|
+        end_matches += pattern
+      end
+    end
+    end_matches.inject{|sum,x| sum + " #{x}"}
   end
 
 end
